@@ -79,6 +79,13 @@ end
 post "/rsvps/:id/update" do
     puts "params: #{params}"
 
+       @rsvp = rsvp_table.where(id: params["id"]).to_a[0]
+    @event = events_table.where(id: @rsvp[:event_id]).to_a[0]
+    rsvp_table.where(id: params["id"]).update(
+        going: params["going"],
+        comments: params["comments"]
+    )
+  
     view "update_rsvp"
 end
 
